@@ -1,10 +1,10 @@
 
 class VectorField {
  
-    void process( PImage img, int spacing ){
+    void process( PImage source, int spacing ){
      
-        int w = img.width;
-        int h = img.height;
+        int w = source.width;
+        int h = source.height;
         
         gridSpacing = spacing;
         
@@ -16,7 +16,7 @@ class VectorField {
         int gridSize = gridHeight * gridWidth;
         
         // load pixels into memory for access
-        img.loadPixels();
+        source.loadPixels();
         
         field = new PVector[gridSize];
         for(int i=0; i<gridSize; i++){
@@ -31,8 +31,8 @@ class VectorField {
             for(int y=0; y<gridHeight; y++){
               
                 int gPos = y * gridWidth + x;
-                int iPos = (y * spacing * w ) + x * spacing;
-                color c = img.pixels[iPos];
+                int iPos = (y * spacing/2 * w ) + x * spacing/2;
+                color c = source.pixels[iPos];
                 brightness[gPos] = 0.33 * (float)red(c)/255.0 + 0.59 * (float)green(c)/255.0 + 0.11* (float)blue(c)/255.0;
             }
         }
@@ -48,8 +48,8 @@ class VectorField {
                 
                 float a = atan2(dY, dX);
                 
-                field[p].x = sin( a ) * gridSpacing * br;
-                field[p].y = cos( a ) * gridSpacing * br;
+                field[p].x = cos( a ) * gridSpacing * br;
+                field[p].y = sin( a ) * gridSpacing * br;
                 
             }
         }
@@ -101,6 +101,8 @@ class VectorField {
     }
     
     void draw(){
+      
+      stroke(0);
      
         for(int x=0; x<gridWidth; x++){
             for(int y=0; y<gridHeight; y++){
@@ -111,7 +113,10 @@ class VectorField {
                 //rect( x * gridSpacing, y*gridSpacing, gridSpacing, gridSpacing);
                 
                 PVector v = field[p];
+                
                 line( (x+0.5) *gridSpacing, (y+0.5)*gridSpacing, (x+0.5)*gridSpacing + v.x, (y+0.5)*gridSpacing+v.y);
+                //noStroke();
+                //ellipse((x+0.5) *gridSpacing, (y+0.5)*gridSpacing, 3, 3); 
             }
         }
     }
@@ -125,22 +130,31 @@ class VectorField {
     
     PVector getVectorInterpolated( PVector pos ){
       
-      float x = pos.x / gridSpacing;
-      float y = pos.y / gridSpacing;
-      
-      int p1X = int(x);
-      int p1Y = int(y);
+      float x = pos.x;
+      float y = pos.y;
+ 
+      int p1X = int(constrain(x, 0, gridWidth-1));
+      int p1Y = int(constrain(y, 0, gridWidth-1));
       
       int p2X = int(x+1);
       int p2Y = int(y+1);
       
       float pctX = x - p1X;
-      float pctY = y - p1X;
+      float pctY = y - p1Y;
       
-      PVector interpolated = new PVector();
+      //println( "x: "+ x + "/" + gridWidth);
+      //println( "y: "+ y + "/" + gridHeight);
       
+      
+      // clocwise
+      PVector vecA = field[p1Y*gridWidth+p1X];
+      PVector vecB = field[p2Y+gridWidth+p2X];
+      
+      PVector lerpVec = new PVector();
+      lerpVec.x = lerp( vecA.x, vecB.x, pctX);
+      lerpVec.y = lerp( vecA.y, vecB.y, pctY);
 
-      return field[p];
+      return lerpVec;
     }
     
     PVector [] field;

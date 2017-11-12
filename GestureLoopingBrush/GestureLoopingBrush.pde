@@ -31,12 +31,10 @@ void draw() {
   if ( bDrawImg) image(myImage, 0, 0);
   
   buffer.beginDraw();
-  
-  
 
   //stroke(0, 50);
-  noStroke();
-  fill(255, 0, 0);
+  buffer.noStroke();
+  buffer.fill(255, 0, 0);
   
   int nLoops = loops.size();
   for (int i=0; i<nLoops; i++) {
@@ -71,11 +69,11 @@ void draw() {
           float g = green(pix)*br;
           float b = blue(pix)*br;
 
-          fill( 0, 50);
-          ellipse(pt.x+rx, pt.y+ry, sz*1.2, sz*1.2);
+          buffer.fill( 0, 10);
+          buffer.ellipse(pt.x+rx, pt.y+ry, sz*1.2, sz*1.2);
 
-          fill( color(r, g, b));
-          ellipse(pt.x+rx, pt.y+ry, sz, sz);
+          buffer.fill( color(r, g, b));
+          buffer.ellipse(pt.x+rx, pt.y+ry, sz, sz);
         }
       }
     }
@@ -85,7 +83,7 @@ void draw() {
   
   image(buffer, 0, 0);
   
-  //if ( loop != null ) loop.draw();
+  if ( loop != null ) loop.draw();
   
   for ( GestureLoop l : loops) {
 
