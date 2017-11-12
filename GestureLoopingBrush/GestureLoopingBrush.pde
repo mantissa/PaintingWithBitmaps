@@ -4,10 +4,12 @@ ArrayList<GestureLoop> loops;
 GestureLoop loop;
 PImage myImage;
 boolean bDrawImg;
+PGraphics buffer;
 
 void setup() {
 
   size(457, 650, P2D);
+  frameRate(60);
 
   myImage = loadImage("../Sources/RothkoUntitled1946.jpg");
   myImage.loadPixels();
@@ -16,34 +18,39 @@ void setup() {
 
   bDrawImg = false;
 
+  buffer = createGraphics(width, height);
+  buffer.beginDraw();
   background(200);
+  buffer.endDraw();
 }
 
 void draw() {
-
-
-
+  
+  background(200);
+  
   if ( bDrawImg) image(myImage, 0, 0);
-
-
-  for ( GestureLoop l : loops) {
-
-    l.update();
-  }
+  
+  buffer.beginDraw();
+  
+  
 
   //stroke(0, 50);
   noStroke();
   fill(255, 0, 0);
-
-
+  
   int nLoops = loops.size();
   for (int i=0; i<nLoops; i++) {
 
-    if ( loops.get(i).getIsDrawing()) {
+    //loops.get(i).draw();
+    
+    if ( loops.get(i).getIsDrawing() || true) {
 
       PVector pt = loops.get(i).getPosition();
 
-      if ( pt.x > 0 && pt.y > 0) {
+      fill(#ff0000);
+      //ellipse(pt.x, pt.y, 5, 5);
+
+      if ( pt.x > 0 && pt.y > 0 ) {
 
         for (int j=0; j<5; j++) {
 
@@ -65,16 +72,27 @@ void draw() {
           float b = blue(pix)*br;
 
           fill( 0, 50);
-          ellipse(px, py, sz*1.2, sz*1.2);
+          ellipse(pt.x+rx, pt.y+ry, sz*1.2, sz*1.2);
 
           fill( color(r, g, b));
-          ellipse(px, py, sz, sz);
+          ellipse(pt.x+rx, pt.y+ry, sz, sz);
         }
       }
     }
   }
+  
+  buffer.endDraw();
+  
+  image(buffer, 0, 0);
+  
+  //if ( loop != null ) loop.draw();
+  
+  for ( GestureLoop l : loops) {
 
-  if ( loop != null ) loop.draw();
+    l.update();
+  }
+
+  
 }
 
 void keyPressed() {

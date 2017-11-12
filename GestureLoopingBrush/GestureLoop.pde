@@ -16,7 +16,6 @@ class GestureLoop {
   GestureLoop() {
 
     points = new ArrayList<GesturePoint>();
-    loopPoints = new ArrayList<Integer>();
     isDrawing = false;
     loopLengthMs = 2000;
   }
@@ -25,22 +24,22 @@ class GestureLoop {
 
     if ( isLooping ) {
 
-      int nPts = points.size();
+      long elapsed = (millis() - loopStartMs);
 
-      if ( points.size() > 0 ) {
+      if ( elapsed >= 1.1 * gestureDurMs ) {
 
-        long now = millis();
-        long elapsed = (long)(1.0 * (now - loopStartMs));
+        loop();
+        
+      } else {
 
-        if ( currentPos < nPts -2 && elapsed >= points.get(currentPos+1).time ) {
+        int nPts = points.size();
 
-          currentPos++;
-          loopPoints.add( currentPos );
-        } 
+        if ( points.size() > 0 ) {
 
-        if ( elapsed >= points.get(nPts-1).time + gestureDurMs * 0.5 ) {
+          if ( currentPos < nPts -1 && elapsed >= points.get(currentPos+1).time ) {
 
-          loop();
+            currentPos++;
+          }
         }
       }
     }
@@ -48,55 +47,7 @@ class GestureLoop {
 
   void draw() {
 
-    if ( isDrawing ) {
-
-      drawDebug();
-    } else if ( isLooping ) {
-
-      drawLoop();
-
-      int nPts = points.size();
-
-      if ( points.size() > 0 ) {
-
-        fill(0);
-
-        ellipse( points.get(currentPos).point.x, points.get(currentPos).point.y, 5, 5);
-
-        long now = millis();
-        long elapsed = (long)(1.0 * (now - loopStartMs));
-
-        //println("elapsed " + elapsed);
-        //println("test " + points.get(currentPos+1).time);
-
-        if ( currentPos < nPts -2 && elapsed >= points.get(currentPos+1).time ) {
-
-          currentPos++;
-          loopPoints.add( currentPos );
-
-          //println("up | currentPos " + currentPos);
-        } 
-
-        if ( elapsed >= points.get(nPts-1).time + gestureDurMs * 0.5 ) {
-
-          loop();
-        }
-      }
-    }
-  }
-
-  ArrayList<PVector> getPoints() {
-
-    ArrayList<PVector> pts = new ArrayList<PVector>();
-
-    for ( Integer lp : loopPoints ) {
-
-      GesturePoint g = points.get(lp);
-
-      pts.add( new PVector(g.point.x, g.point.y) );
-    }
-
-    return pts;
+    drawDebug();
   }
 
   void drawDebug() {
@@ -108,24 +59,6 @@ class GestureLoop {
 
     for ( GesturePoint p : points ) {
       vertex( p.point.x, p.point.y );
-    }
-
-    endShape();
-  }
-
-  void drawLoop() {
-
-    noFill();
-    stroke(0);
-
-
-    beginShape();
-
-    for ( Integer lp : loopPoints ) {
-
-      GesturePoint g = points.get(lp);
-
-      vertex( g.point.x, g.point.y );
     }
 
     endShape();
@@ -159,18 +92,12 @@ class GestureLoop {
     isLooping = true;
     loopStartMs = millis();
     currentPos = 0;
-
-    loopPoints.clear();
-    loopPoints.add( currentPos );
   }
 
   boolean getIsDrawing() {
 
-    int nPts = points.size();   
-    long now = millis();
-    long elapsed = (long)(1.0 * (now - loopStartMs));
-
-    return elapsed <= points.get(nPts-1).time;
+    long elapsed = millis() - loopStartMs;
+    return elapsed < gestureDurMs;
   }
 
   PVector getPosition() {
@@ -184,7 +111,6 @@ class GestureLoop {
   }
 
   ArrayList<GesturePoint> points;
-  ArrayList<Integer> loopPoints;
 
   long gestureDurMs;
   long gestureStartMs;
