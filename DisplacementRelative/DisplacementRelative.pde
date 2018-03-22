@@ -3,7 +3,7 @@ PImage myImage;
 
 void setup(){
   
-    size(850, 800);
+    size(425, 400);
   
     myImage = loadImage("welovecutepets.jpg");
     myImage.loadPixels();
@@ -18,18 +18,18 @@ void draw(){
     for(int x=0; x<width; x++){
         for(int y=0; y<height; y++){
           
-            float nX = cos( 5 * TWO_PI * (float)(x)/ width ) * 5;
-            nX += sin( nX * 0.125 + time  + (x * 0.0125)  ) * 25;
-            nX += sin( nX * 0.125 + time + (x * 0.0125)  ) * 65;
+            float nX = cos( 2 * TWO_PI * (float)(x)/ width ) * 5;
+            nX += cos( nX * 0.125 + time  + (x * 0.0125)  ) * 25;
+            //nX += sin( nX * 0.125 + time + (x * 0.0125)  ) * 65;
             
-            float nY = sin( 5 * TWO_PI * (float)(y)/ height ) * 5;
+            float nY = sin( 2 * TWO_PI * (float)(y)/ height ) * 5;
             nY += sin( nY * 0.125 + time + (y) * 0.0125 ) * 25;
-            nY += sin( nY * 0.125 + time + (y) * 0.0125 ) * 65;
+            //nY += sin( nY * 0.125 + time + (y) * 0.0125 ) * 65;
             
-            int rX = constrain(int(nX + x), 0, width-1);
-            int rY = constrain(int(nY + y), 0, height-1);
+            int rX = constrain(int(nX + x), 0, myImage.width-1);
+            int rY = constrain(int(nY + y), 0, myImage.height-1);
           
-            int readPos = rY * width + rX;
+            int readPos = rY * myImage.width + rX;
             int writePos = y * width + x;
             
             int pix = myImage.pixels[readPos];

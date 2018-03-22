@@ -4,10 +4,8 @@ PImage myImage;
 void setup(){
   
     size(425, 400);
-    //size(780, 800);
   
     myImage = loadImage("welovecutepets.jpg");
-    //myImage = loadImage("no-21.jpg");
     myImage.loadPixels();
     
     loadPixels();

@@ -8,8 +8,7 @@ void setup() {
   
   bDrawDebug = false;
   
-  //size( 780, 800, P2D);
-  size( 1200, 400, P2D); 
+  size( 800, 800, P2D); 
  
   texPoints = new ArrayList<PVector>();
   gesturePoints = new ArrayList<PVector>();
@@ -74,8 +73,6 @@ void draw() {
 
     endShape();
     
-    
-    
   } else {
 
     beginShape(TRIANGLE_STRIP);
@@ -123,6 +120,11 @@ void draw() {
     
     drawOutline();
   }
+}
+
+void keyPressed(){
+ 
+    bDrawDebug = !bDrawDebug;
 }
 
 void mousePressed() {

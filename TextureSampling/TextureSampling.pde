@@ -6,7 +6,7 @@ PImage imageTex;
 
 void setup(){
  
-    size( 1200, 400 , P2D);
+    size( 800, 800 , P2D);
   
     texPoints = new ArrayList<PVector>();
     gesturePoints = new ArrayList<PVector>();
@@ -18,6 +18,12 @@ void setup(){
 void draw(){
   
    background(200);
+   
+   if( bDrawDebug ){
+    
+       drawDebug();
+       return;
+   }
     
    int nPts = gesturePoints.size();
    
@@ -48,6 +54,24 @@ void draw(){
    }
 
    endShape();
+}
+
+void drawDebug(){
+ 
+    image(imageTex, 0, 0);
+    
+    float time = 0.2 * (float)millis()/1000;
+    
+    // animated scan line through the image
+    stroke(0);
+    line( 
+      0, cos( time ) * height/2 + height/2,
+      imageTex.width, cos( time ) * height/2 + height/2);
+}
+
+void keyPressed(){
+ 
+    bDrawDebug = !bDrawDebug;
 }
 
 void mousePressed(){

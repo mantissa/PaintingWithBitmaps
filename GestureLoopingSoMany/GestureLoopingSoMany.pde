@@ -15,10 +15,27 @@ void draw(){
  
     if( loop != null ) loop.draw();
     
+    stroke(0);
+    
     for( GestureLoop l : loops){
      
         l.draw();
     }
+    
+   for( GestureLoop l : loops){
+    
+       if( !l.getIsShrinking()){
+         
+           PVector pt = l.getPosition();
+       
+   
+         fill(255, 0, 0);
+         stroke(255, 0, 0);
+         ellipse( pt.x, pt.y, 3, 3);
+       }
+     
+       
+   }
 }
 
 void mousePressed(){
