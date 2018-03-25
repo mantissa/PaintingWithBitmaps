@@ -4,6 +4,7 @@ ArrayList<GestureLoop> loops;
 GestureLoop loop;
 PImage myImage;
 boolean bDrawImg;
+boolean isRecording;
 PGraphics buffer;
 
 void setup() {
@@ -17,6 +18,7 @@ void setup() {
   loops = new ArrayList<GestureLoop>();
 
   bDrawImg = false;
+  isRecording = false;
 
   buffer = createGraphics(width, height);
   buffer.beginDraw();
@@ -26,8 +28,10 @@ void setup() {
 
 void draw() {
   
-  background(200);
+  background(0);
   
+  // draw the source image as the background
+  // @note: press 'd' to toggle
   if ( bDrawImg) image(myImage, 0, 0);
   
   buffer.beginDraw();
@@ -49,29 +53,36 @@ void draw() {
       //ellipse(pt.x, pt.y, 5, 5);
 
       if ( pt.x > 0 && pt.y > 0 ) {
+        
+        // create 5 marks simultanousely
+        // marks are made randomly around the cursor
+        int nMarks = 5;
 
-        for (int j=0; j<5; j++) {
+        for (int j=0; j<nMarks; j++) {
 
+          // create a random angle
           float a = random(TWO_PI);
+         
+          // and a random offset
           float d = random(0, 8);
-
           float rx = cos( a ) * d;
           float ry = sin( a ) * d;
 
+          // contstrain the pts to the image size
           int px = (int)constrain( pt.x+rx, 0, width-1);
           int py = (int)constrain( pt.y+ry, 0, height-1);
 
+          // get the pixel color
           int pix = myImage.pixels[ py * width + px];
           float sz = map( brightness(pix), 0, 255, 4, 20);
+          
+          // randomly adjust the brightness of the mark
           float br = random(0.8, 1.0);
-
           float r = red(pix)*br;
           float g = green(pix)*br;
           float b = blue(pix)*br;
 
-          //buffer.fill( 0, 10);
-          //buffer.ellipse(pt.x+rx, pt.y+ry, sz*1.2, sz*1.2);
-
+          // draw a mark
           buffer.fill( color(r, g, b));
           buffer.ellipse(pt.x+rx, pt.y+ry, sz, sz);
         }
@@ -83,14 +94,13 @@ void draw() {
   
   image(buffer, 0, 0);
   
-  if ( loop != null ) loop.draw();
+  // draw the current mark
+  if ( isRecording ) loop.draw();
   
+  // update all the recorded loops
   for ( GestureLoop l : loops) {
-
-    l.update();
+     l.update();
   }
-
-  
 }
 
 void keyPressed() {
@@ -100,22 +110,26 @@ void keyPressed() {
 
 void mousePressed() {
 
+  // create a new loop
   loop = new GestureLoop();
-
   loop.start(mouseX, mouseY);
+  isRecording = true;
 }
 
 void mouseDragged() {
 
+  // add a new point
   loop.addPoint(mouseX, mouseY);
 }
 
 void mouseReleased() {
 
+  // stop recording & loop playback
   loop.stop();
   loop.loop();
+  isRecording = false;
 
+  // add to the array
   loops.add(loop);
-
   loop = null;
 }
