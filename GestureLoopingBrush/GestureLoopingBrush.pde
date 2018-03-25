@@ -69,8 +69,8 @@ void draw() {
           float g = green(pix)*br;
           float b = blue(pix)*br;
 
-          buffer.fill( 0, 10);
-          buffer.ellipse(pt.x+rx, pt.y+ry, sz*1.2, sz*1.2);
+          //buffer.fill( 0, 10);
+          //buffer.ellipse(pt.x+rx, pt.y+ry, sz*1.2, sz*1.2);
 
           buffer.fill( color(r, g, b));
           buffer.ellipse(pt.x+rx, pt.y+ry, sz, sz);
