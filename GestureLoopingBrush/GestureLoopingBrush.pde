@@ -47,10 +47,8 @@ void draw() {
     
     if ( loops.get(i).getIsDrawing() || true) {
 
+      // get the position of the gesture loop
       PVector pt = loops.get(i).getPosition();
-
-      fill(#ff0000);
-      //ellipse(pt.x, pt.y, 5, 5);
 
       if ( pt.x > 0 && pt.y > 0 ) {
         
