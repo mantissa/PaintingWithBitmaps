@@ -67,6 +67,7 @@ void mouseDragged(){
     points.add( new PVector(mouseX, mouseY ));   
     colors.add( color(random(255), 200, random(127, 255)) );
     
+    // uncomment to smooth points
     // smoothPoints();
 }
 
