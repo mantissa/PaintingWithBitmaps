@@ -17,7 +17,6 @@ void draw(){
  
     background(227);
 
-  
     beginShape(QUAD_STRIP);
     
     int nPts = points.size();
