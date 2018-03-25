@@ -16,8 +16,7 @@ void setup(){
 void draw(){
  
     background(227);
-  
-   // randomSeed(0);
+
   
     beginShape(QUAD_STRIP);
     
@@ -32,8 +31,13 @@ void draw(){
         
         float angle = atan2( diff.x, diff.y );
         
+        // fixed width of 10 pix
         float mag = 10; 
-        // map( diff.mag(), 0, 10, 3, 15);
+        
+        // uncomment to make dynamic
+        //mag = map( diff.mag(), 0, 10, 3, 15);
+        
+        // uncomment to taper
         //mag *= sin( PI * float(i)/(nPts-2));
         
         PVector span = new PVector();
