@@ -28,12 +28,14 @@ class Gesture {
     position = new PVector(pos.x, pos.y); 
     direction = new PVector(0., 0.0);
 
+    // *change me* : gesture length & widths & durations
     minWidth = 5;
     maxWidth = 30; // + random(0, 20);
     gestureLength = (int)random(200, 400);
     colorInterval = 1; //(int)random(1, 5);
     loopDuration = (int)random(50, 200);
     
+    // draw other shapes
     drawOther = false;
     if( random(1.0) > 0.9) drawOther = true;
     otherColor = color( random(5) * 50 );

@@ -15,9 +15,11 @@ void setup(){
     img = loadImage("no-21.jpg");
     imgBlur = loadImage("no-21gray.jpg");
     
+    // *change me*: vector field grid size
     vectorField = new VectorField();
     vectorField.process( imgBlur, 20 );
     
+    // *change me*: how many gestures
     gestures = new Gesture[80];
     for(int i=0; i<gestures.length; i++){
         PVector p = new PVector( random(width), random(height));
@@ -53,6 +55,7 @@ void draw(){
        
        // minimum speed (x or y)
        
+       // *change me*: minimum speed
        float min = 2;
        boolean useMinX = false;
        boolean useMinY = false;
@@ -85,10 +88,11 @@ void draw(){
          }
        }
        
-       // how fast?
+       // *change me*: how fast?
        move.mult(100);
        
-       // direction smoothing (lower looks better)
+       // *change me* interpolation / direction smoothing
+       // (lower looks better)
        gestures[i].direction.lerp( move, 0.1);
       
        gestures[i].update(gestures[i].direction); 
