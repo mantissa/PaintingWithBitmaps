@@ -15,41 +15,41 @@ Painting with Bitmaps is a two-day workshop exploring programmatic composition t
 * PixelAccess
 * PixelAccess2
 
-## PixelBending
+### PixelBending
 * DisplacementRelative
 * DisplacementRelative2
 * DisplacementRelative3
 * DisplacementAbsolute
 * DisplacementAbsolute2
 
-## Custom Brushes
+### Custom Brushes
 * MouseFollowing
 * ImageBrush
 * ImageSequenceBrush
 
-## Geometry / Custom Shapes
+### Geometry / Custom Shapes
 * CustomShapes
 * QuadStrip
 * QuadStripBrush
 
-## Texture Mapping
+### Texture Mapping
 * TextureCoordinates
 * TextureSampling
 * TextureSampling2
 * TextureSampling3
 
-## Gesture Recording
+### Gesture Recording
 * GestureLooping
 * GestureLoopingBrush
 * GestureLoopingPainting
 * GestureLoopingSoMany
 
-## Generative Techniques
+### Generative Techniques
 * AutoGesture
 * AutoGestureMoving
 * VectorFieldPaint
 
-## Utils / Other Examples
+### Utils / Other Examples
 * Trig101
 * BrushAngle
 * Transformations
@@ -57,7 +57,8 @@ Painting with Bitmaps is a two-day workshop exploring programmatic composition t
 * VideoPlayback*
 * LiveCameraInput*
 
-November 11 and 12, 2017
-Mar 24 and 25, 2018
-October 27 and 28, 2018
+## Workshop Dates
+* November 11 and 12, 2017
+* Mar 24 and 25, 2018
+* October 27 and 28, 2018
 
