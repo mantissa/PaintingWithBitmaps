@@ -30,18 +30,23 @@ void drawAngle(){
    int p2x = mouseX;
    int p2y = mouseY;
    
-   stroke(0);
+   stroke( 0);
    fill(0);
-   line( p1x, p1y, p2x, p2y);
    ellipse( p1x, p1y, 5, 5);
+   stroke(255, 0, 0);
+   fill(255, 0, 0);
+   line( p1x, p1y, p2x, p2y);
    
    float a = getAngle(p1x, p1y, p2x, p2y);
    float d = getDistance(p1x, p1y, p2x, p2y);
    
+   fill(0);
    text( "angle: " + a, 10, 50);
    text( "distance: " + d, 10, 100);
    
    // draw the angle/vector
+   
+   fill(255, 0, 0);
    pushMatrix();
    translate( p2x, p2y);
    rotate( a );
@@ -49,12 +54,12 @@ void drawAngle(){
    popMatrix();
    
    // draw dx and dy
-   stroke( 0, 150);
+   stroke( 0, 0, 255, 150);
    dashLine( p1x, p1y, p2x, p1y, 5);
    dashLine( p2x, p1y, p2x, p2y, 5);
    
    // draw the perpendicular too
-   stroke(100, 0, 0);
+   stroke(255, 255, 0);
    pushMatrix();
    translate( p1x, p1y);
    rotate( a + PI/2);
