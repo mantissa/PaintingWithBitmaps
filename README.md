@@ -60,7 +60,7 @@ View the workshop slides: <a href="https://docs.google.com/presentation/d/1xhWLH
 * Transformations
 * SavingImages
 * VideoPlayback*
-* LiveCameraInput*
+* LiveCameraInput
 
 ## Workshop Dates
 * November 11 and 12, 2017
