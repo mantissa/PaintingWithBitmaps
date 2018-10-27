@@ -28,6 +28,8 @@ View the workshop slides: <a href="https://docs.google.com/presentation/d/1xhWLH
 ### Custom Brushes
 * MouseFollowing
 * ImageBrush
+* ImagePainting
+* ImagePaintingBrush
 * ImageSequenceBrush
 
 ### Geometry / Custom Shapes

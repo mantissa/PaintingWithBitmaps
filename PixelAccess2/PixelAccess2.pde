@@ -9,11 +9,15 @@ void setup(){
 }
 
 void draw(){
+  
+    background(0);
  
     int w = myImage.width;
     int h = myImage.height;
     
     noStroke();
+    
+    // loop thru all the pixels and draw each one (this may be slow AF)
     
     for(int x=0; x<w; x++){
         for(int y=0; y<h; y++){

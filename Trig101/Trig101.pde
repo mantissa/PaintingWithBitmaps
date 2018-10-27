@@ -37,12 +37,14 @@ void drawAngle(){
    text( "angle: " + a, 10, 50);
    text( "distance: " + d, 10, 100);
    
+   // draw the angle/vector
    pushMatrix();
    translate( p2x, p2y);
    rotate( a );
    triangle( 0, -5, 10, 0, 0, 5);
    popMatrix();
    
+   // draw the perpendicular too
    stroke(100, 0, 0);
    pushMatrix();
    translate( p1x, p1y);

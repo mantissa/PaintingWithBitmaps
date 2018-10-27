@@ -4,7 +4,7 @@
 void setup(){
  
     // create a window with dimensions w & h
-    size(800, 400);
+    size(800, 600);
     
     // set the frame rate to 30 FPS
     frameRate(30);
@@ -19,10 +19,13 @@ void draw(){
   
     if( mousePressed ){
       
+      // when the mouse is pressed
+      // draw 10 'marks' every frame
+      
       for(int i=0; i<10; i++){
        
           // calculate brush elements randomly
-          float w = random(1, 10); // width
+          float w = random(1, 20); // width
           float x = random(-10, 10); // x offset +/-
           float y = random(-10, 10); // y offset +/-
           float a = random(50, 200); // alpha 

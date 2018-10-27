@@ -10,7 +10,7 @@ void draw(){
     background(0);
  
     // rotate first then draw shape at 100,100
-    //rotateAroundOrigin(true);
+    rotateAroundOrigin(true);
     
     // translate first, then rotate, draw shape at 100,100
     //translateThenRotate(true);
@@ -19,8 +19,8 @@ void draw(){
     //translateThenRotateAroundCenter();
     
     // draw both transformations, what do you see?
-    rotateAroundOrigin(false);
-    translateThenRotate(false);
+    //rotateAroundOrigin(false);
+    //translateThenRotate(false);
     
     // draw both transformations with push/pop
     //usingPushPop();
