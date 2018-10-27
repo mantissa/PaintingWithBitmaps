@@ -10,6 +10,7 @@ Painting with Bitmaps is a two-day workshop exploring programmatic composition t
 
 View the workshop slides: <a href="https://docs.google.com/presentation/d/1xhWLHJkBjdRw3AcK3_a9OmqxGI3WiAVWqliP_RWeRis/edit?usp=sharing" target="_blank">Google Docs Slideshow</a>
 
+## Workshop Outline / Processing Sketches
 ### Introduction
 * Drawing101
 * Drawing201
