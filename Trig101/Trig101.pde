@@ -48,6 +48,7 @@ void drawAngle(){
    triangle( 0, -5, 10, 0, 0, 5);
    popMatrix();
    
+   // draw dx and dy
    stroke( 0, 150);
    dashLine( p1x, p1y, p2x, p1y, 5);
    dashLine( p2x, p1y, p2x, p2y, 5);
