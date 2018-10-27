@@ -1,5 +1,9 @@
 
+
 PFont font;
+
+float[] dashes = { 16.0f, 8.0f, 4.0f, 8.0f };
+
 
 void setup(){
   
@@ -44,6 +48,10 @@ void drawAngle(){
    triangle( 0, -5, 10, 0, 0, 5);
    popMatrix();
    
+   stroke( 0, 150);
+   dashLine( p1x, p1y, p2x, p1y, 5);
+   dashLine( p2x, p1y, p2x, p2y, 5);
+   
    // draw the perpendicular too
    stroke(100, 0, 0);
    pushMatrix();
@@ -77,6 +85,28 @@ void drawCircle(){
     
     strokeWeight(2);
     line(p1x, p1y, p1x+c1x, p1y+c1y);
+}
+
+void dashLine(float x1, float y1, float x2, float y2, int spacing){
+ 
+    float dx = x2 - x1;
+    float dy = y2 - y1;
+  
+    PVector dist = new PVector(dx, dy);
+    
+    float mag = dist.mag();
+    
+    PVector stepSize = dist.div( mag );
+  
+    beginShape(LINES);
+    
+    for(float i=0; i<mag; i+=spacing){
+     
+        vertex( x1+i * stepSize.x, y1+i * stepSize.y);
+        vertex( x1+(i+1) * stepSize.x, y1+(i+1) * stepSize.y);
+    }
+    
+    endShape();
 }
 
 float getAngle( float p1x, float p1y, float p2x, float p2y ){
