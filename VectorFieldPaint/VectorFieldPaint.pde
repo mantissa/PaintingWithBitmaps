@@ -6,6 +6,7 @@ Gesture [] gestures;
 boolean drawVectorField;
 boolean drawImage;
 boolean drawBlur;
+boolean drawShapes;
 
 void setup(){
   
@@ -17,7 +18,7 @@ void setup(){
     vectorField = new VectorField();
     vectorField.process( imgBlur, 20 );
     
-    gestures = new Gesture[600];
+    gestures = new Gesture[80];
     for(int i=0; i<gestures.length; i++){
         PVector p = new PVector( random(width), random(height));
         gestures[i] = new Gesture(p);
@@ -26,67 +27,73 @@ void setup(){
     drawVectorField = false;
     drawImage = false;
     drawBlur = false;
+    drawShapes = true;
 }
 
 void draw(){
  
-    background(200);
+    //background(171,  0,  9);;
+    background(227, 97,11);
     
     if( drawImage ) image(img, 0, 0);
     if( drawBlur ) image(imgBlur, 0, 0);
-    
-    if( drawVectorField ){
-     
-        vectorField.draw();
-    }
+    if( drawVectorField ) vectorField.draw();
     
     for(int i=0; i<gestures.length; i++){
       
        PVector gPos = new PVector(gestures[i].position.x, gestures[i].position.y);
        gPos.div(vectorField.gridSpacing);
       
-       PVector vec = vectorField.getVectorInterpolated( gPos );
-       //PVector vec = vectorField.getVector( gPos );
+       //PVector vec = vectorField.getVectorInterpolated( gPos );
+       PVector vec = vectorField.getVector( gPos );
        PVector move = new PVector(vec.x, vec.y);
-       
-       boolean dirX = move.x < 0.0;
-       boolean dirY = move.y < 0.0;
-       
 
+        // normalize
        //move.normalize();
-       //move.mult(2);
        
-       float min = 0.25;
+       // minimum speed (x or y)
        
-       if( dirX){
+       float min = 2;
+       boolean useMinX = false;
+       boolean useMinY = false;
+       
+       if( useMinX ){
+         
+         boolean dirX = move.x < 0.0;
+       
+         if( dirX){
+             
+           move.x = max( abs(move.x), min ) * -1;
            
-         move.x = max( abs(move.x), min ) * -1;
-         
-       } else {
-         
-         move.x = max( move.x, min );
+         } else {
+           
+           move.x = max( move.x, min );
+         }
        }
        
-       if( dirY){
+       if( useMinY){
+         
+         boolean dirY = move.y < 0.0;
+       
+         if( dirY){
+             
+           move.y = max( abs(move.y), min ) * -1;
            
-         move.y = max( abs(move.y), min ) * -1;
-         
-       } else {
-         
-         move.y = max( move.y, min );
+         } else {
+           
+           move.y = max( move.y, min );
+         }
        }
        
+       // how fast?
+       move.mult(100);
        
-       //move.y = max( move.y, 0.1 );
-       //move.mult(0.2);
-       
-       //move.mult(2);
-       
-       gestures[i].direction.lerp( move, 0.5);
+       // direction smoothing (lower looks better)
+       gestures[i].direction.lerp( move, 0.1);
       
        gestures[i].update(gestures[i].direction); 
       
-       gestures[i].draw();
+       if( drawShapes ) gestures[i].draw();
        
        if( gestures[i].isOffscreen() || gestures[i].nFrames > gestures[i].loopDuration){
          
@@ -97,9 +104,9 @@ void draw(){
                gestures[i].reset();
                gestures[i].position.set(  random(width), random(height) );
            }
-  
        }
     }
+    
 }
 
 void keyPressed(){
@@ -107,4 +114,5 @@ void keyPressed(){
     if( key == 'd') drawVectorField = !drawVectorField;
     if( key == 'i') drawImage = !drawImage;
     if( key == 'b') drawBlur = !drawBlur;
+    if( key == 's') drawShapes = !drawShapes;
 }

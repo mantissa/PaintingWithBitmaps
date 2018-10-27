@@ -16,6 +16,8 @@ class Gesture {
   int gestureLength; // * 
   int colorInterval; // *
   int loopDuration; // *
+  boolean drawOther;
+  color otherColor;
 
   Gesture(PVector pos) {
 
@@ -27,10 +29,14 @@ class Gesture {
     direction = new PVector(0., 0.0);
 
     minWidth = 5;
-    maxWidth = 5 + random(0, 20);
-    gestureLength = (int)random(50, 200);
-    colorInterval = (int)random(2, 10);
-    loopDuration = (int)random(100, 200);
+    maxWidth = 30; // + random(0, 20);
+    gestureLength = (int)random(200, 400);
+    colorInterval = 1; //(int)random(1, 5);
+    loopDuration = (int)random(50, 200);
+    
+    drawOther = false;
+    if( random(1.0) > 0.9) drawOther = true;
+    otherColor = color( random(5) * 50 );
 
     reset();
   }
@@ -47,24 +53,34 @@ class Gesture {
     
     position.add(vel);
     
-    if ( colors.size() % colorInterval == 0 ) {
+    if( drawOther){
+      
+      colors.add( otherColor );
+      
+    } else {
+    
+      if ( colors.size() % colorInterval == 0 ) {
+  
+        int px = constrain( (int)position.x, 0, img.width-1);
+        int py = constrain( (int)position.y, 0, img.height-1);
+  
+        newColor = img.pixels[ py * img.width + px ];  
+        
+        colors.add( newColor);
+      } 
 
-      int px = constrain( (int)position.x, 0, img.width-1);
-      int py = constrain( (int)position.y, 0, img.height-1);
+    }
 
-      newColor = img.pixels[ py * img.width + px ];  
-    } 
-
-    colors.add( newColor);
+    
     points.add( new PVector(position.x, position.y) );
 
     if ( points.size() >= gestureLength ) {
 
-      points.remove(0);//points.size()-1);
-      colors.remove(0); //colors.size()-1);
+        points.remove(0);
+        colors.remove(0);
     }
     
-    smoothPoints( points, 0.1);
+    //smoothPoints( points, 0.1);
     
     nFrames++;
   }
@@ -79,13 +95,11 @@ class Gesture {
     fill(0);
     //ellipse( position.x, position.y, 5, 5);
     //noStroke();
-    stroke(0, 15);
-   // println(points.size());
-
+    stroke(0, 10);
 
     if( points.size() < 2 ) return;
 
-    beginShape(QUADS);
+    beginShape(QUAD_STRIP);
 
     int nPts = points.size();
 
@@ -94,71 +108,49 @@ class Gesture {
     for ( int i=0; i<nPts-2; i++ ) {
 
       PVector pt = new PVector(points.get(i).x, points.get(i).y);
-      PVector pt1 = new PVector(points.get(i).x, points.get(i).y);
+      PVector pt1 = new PVector(pt.x, pt.y);
 
       lastColor = colors.get(i);
+      
+      int pos = (int) pt.y * vectorField.imgW + (int)pt.x;
+      
+      float br = vectorField.brightness[pos];
 
       PVector diff = pt1.sub( points.get(i+1));
 
       float angle = atan2( diff.y, diff.x );
 
-      float mag = 0; //map( diff.mag(), 0, 1, minWidth, maxWidth);
+      float mag = 0; 
+      
+      boolean useBrightness = true;
 
-      if ( true ) {
+      if ( useBrightness ) {
+        
+        // width based on brightness
 
-        mag = map( brightness(lastColor), 0, 255, minWidth, maxWidth);
-        //mag *= sin( PI * float(i)/(nPts-2));
+        mag = map( br, 0.2, 1.0, minWidth, maxWidth);
         mag = constrain(mag, minWidth, maxWidth);
         
       } else {
+        
+        // width based on magnitude
 
-        mag = map( diff.mag(), 0, 1, minWidth, maxWidth);
+        mag = map( diff.mag(), 0, 20, minWidth, maxWidth);
         mag = constrain(mag, minWidth, maxWidth);
-        //mag *= sin( PI * float(i)/(nPts-2));
       }
 
+      // taper based on pct
       mag *= sin( PI * float(i)/(nPts-2));
 
       PVector span = new PVector();
-      span.x = cos( angle + PI/2 ) * mag;
-      span.y = sin( angle + PI/2 ) * mag;
+      span.x = cos( angle - PI/2 ) * mag;
+      span.y = sin( angle - PI/2 ) * mag;
 
       fill( lastColor);
-      //stroke( red(lastColor)*0.95, green(lastColor)*0.95, blue(lastColor)*0.95);
-      //color c = color( random(255), 200, random(127, 255)); 
-
       vertex( pt.x - span.x, pt.y - span.y );
       vertex( pt.x + span.x, pt.y + span.y );
 
-      pt = new PVector(points.get(i+1).x, points.get(i+1).y);
-      pt1 = new PVector(points.get(i+1).x, points.get(i+1).y);
-
-      diff = pt1.sub( points.get(i+2));
       
-      lastColor = colors.get(i+1);
-
-      angle = atan2( diff.y, diff.x );
-
-      if ( true ) {
-
-        mag = map( brightness(lastColor), 0, 255, minWidth, maxWidth);
-        mag = constrain(mag, minWidth, maxWidth);
-        
-      } else {
-
-        mag = map( diff.mag(), 0, 1, minWidth, maxWidth);
-        
-        mag = constrain(mag, minWidth, maxWidth);
-        
-      }
-      
-      mag *= sin( PI * float(i+1)/(nPts-2));
-
-      span.x = cos( angle + PI/2 ) * mag;
-      span.y = sin( angle + PI/2 ) * mag;
-
-      vertex( pt.x + span.x, pt.y + span.y );
-      vertex( pt.x - span.x, pt.y - span.y );
     }
 
     endShape();
