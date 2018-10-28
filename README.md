@@ -54,11 +54,15 @@ View the workshop slides: <a href="https://docs.google.com/presentation/d/1xhWLH
 * AutoGestureMoving
 * VectorFieldPaint
 
+### Output
+* SavingImages
+* SavePDF
+* SavePDFMultiFrame
+
 ### Utils / Other Examples
 * Trig101
 * BrushAngle
 * Transformations
-* SavingImages
 * VideoPlayback*
 * LiveCameraInput
 
