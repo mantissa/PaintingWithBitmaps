@@ -34,6 +34,7 @@ View the workshop slides: <a href="https://docs.google.com/presentation/d/1xhWLH
 
 ### Geometry / Custom Shapes
 * CustomShapes
+* CustomMesh
 * QuadStrip
 * QuadStripBrush
 
@@ -54,6 +55,10 @@ View the workshop slides: <a href="https://docs.google.com/presentation/d/1xhWLH
 * AutoGestureMoving
 * VectorFieldPaint
 
+### SlitScan
+* SlitScan
+* SlitScanBrush
+
 ### Output
 * SavingImages
 * SavePDF
@@ -64,7 +69,7 @@ View the workshop slides: <a href="https://docs.google.com/presentation/d/1xhWLH
 * BrushAngle
 * Transformations
 * VideoPlayback*
-* LiveCameraInput
+* VideoInput
 
 ## Workshop Dates
 * November 11 and 12, 2017
