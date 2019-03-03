@@ -70,4 +70,5 @@ View the workshop slides: <a href="https://docs.google.com/presentation/d/1xhWLH
 * November 11 and 12, 2017
 * Mar 24 and 25, 2018
 * October 27 and 28, 2018
+* March 3, 2019
 
