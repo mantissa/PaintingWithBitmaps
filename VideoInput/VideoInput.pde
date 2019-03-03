@@ -5,7 +5,7 @@ Capture cam;
 // @note: install "video" library Sketch=>ImportLibrary=>AddLibrary 
 
 void setup() {
-  size(640, 480);
+  size(640, 360);
 
   String[] cameras = Capture.list();
   
@@ -17,11 +17,14 @@ void setup() {
     for (int i = 0; i < cameras.length; i++) {
       println(cameras[i]);
     }
+ 
     
     // The camera can be initialized directly using an 
     // element from the array returned by list():
     cam = new Capture(this, cameras[3]);
     cam.start();     
+    
+    
   }      
   
   noStroke();
@@ -30,6 +33,8 @@ void setup() {
 void draw() {
   if (cam.available() == true) {
     cam.read();
+    
+    //println(cam.width +" "+ cam.height);
   }
   
   /*
